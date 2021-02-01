@@ -88,6 +88,17 @@
                 },
                 {
                     "name": "",
+                    "id": "9c352794-aeb1-4c64-bf00-35c1c8d4218d",
+                    "path": "<Gamepad>/leftStick",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "XboxController",
+                    "action": "Move",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
                     "id": "8e5c0c70-7fe4-451b-b880-2d30dc3d22c3",
                     "path": "<Keyboard>/space",
                     "interactions": "",
@@ -99,11 +110,33 @@
                 },
                 {
                     "name": "",
+                    "id": "bba16218-1720-4b23-9a56-dfb188390faf",
+                    "path": "<Gamepad>/buttonSouth",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "XboxController",
+                    "action": "Jump",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
                     "id": "226f5aa7-c54e-4c3f-a36a-fe93736da62c",
                     "path": "<Mouse>/leftButton",
                     "interactions": "",
                     "processors": "",
                     "groups": "Keyboard",
+                    "action": "Attack",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "cb79e490-a884-4f78-98a0-e142772361ed",
+                    "path": "<XInputController>/buttonWest",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "XboxController",
                     "action": "Attack",
                     "isComposite": false,
                     "isPartOfComposite": false
@@ -122,6 +155,11 @@
                     "isOR": false
                 }
             ]
+        },
+        {
+            "name": "XboxController",
+            "bindingGroup": "XboxController",
+            "devices": []
         }
     ]
 }
