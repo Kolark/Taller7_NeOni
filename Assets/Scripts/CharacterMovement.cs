@@ -16,6 +16,7 @@ public class CharacterMovement : MonoBehaviour
     private Vector3 slopeNormal;
     private bool grounded;
     private bool facingRight = true;
+    private bool isCrouching;
     private float verticalVelocity;
 
     InputController inputController;
@@ -40,8 +41,8 @@ public class CharacterMovement : MonoBehaviour
     private void Start()
     {
         inputController = InputController.Instance;
-        inputController.Jump += Jump;
-        inputController.Attack += Crouch;//Nombre temporal mientras se agrega el input de Crouch
+        inputController.Jump += Crouch;
+        //inputController.Attack += Crouch;//Nombre temporal mientras se agrega el input de Crouch
     }
 
     public void Move()
@@ -83,7 +84,9 @@ public class CharacterMovement : MonoBehaviour
     }
     public void Crouch()
     {
-
+        Debug.Log("Ma men do be crouching");
+        isCrouching = true;
+        anim.SetBool("IsCrouching", isCrouching);
     }
 
     private void Jump()
@@ -117,32 +120,32 @@ public class CharacterMovement : MonoBehaviour
         float yRay = (controller.bounds.center.y - (controller.height * 0.5f)) + innerVerticalOffset;
 
         RaycastHit hit;
-
+        //Middle
         if (Physics.Raycast(new Vector3(controller.bounds.center.x, yRay, controller.bounds.center.z), -Vector3.up, out hit, innerVerticalOffset + distanceGrounded))
         {
             Debug.DrawRay(new Vector3(controller.bounds.center.x, yRay, controller.bounds.center.z), -Vector3.up * (innerVerticalOffset + distanceGrounded), Color.red);
             slopeNormal = hit.normal;
             return (slopeNormal.y > slopeThreshold) ? true : false;
         }
-
+        //Front Right
         if (Physics.Raycast(new Vector3(controller.bounds.center.x + (controller.bounds.extents.x - extremitiesOffset), yRay, controller.bounds.center.z + (controller.bounds.extents.z - extremitiesOffset)), -Vector3.up, out hit, innerVerticalOffset + distanceGrounded))
         {
             slopeNormal = hit.normal;
             return (slopeNormal.y > slopeThreshold) ? true : false;
         }
-
+        //Front Left
         if (Physics.Raycast(new Vector3(controller.bounds.center.x - (controller.bounds.extents.x - extremitiesOffset), yRay, controller.bounds.center.z + (controller.bounds.extents.z - extremitiesOffset)), -Vector3.up, out hit, innerVerticalOffset + distanceGrounded))
         {
             slopeNormal = hit.normal;
             return (slopeNormal.y > slopeThreshold) ? true : false;
         }
-
+        //Back Right
         if (Physics.Raycast(new Vector3(controller.bounds.center.x + (controller.bounds.extents.x - extremitiesOffset), yRay, controller.bounds.center.z - (controller.bounds.extents.z - extremitiesOffset)), -Vector3.up, out hit, innerVerticalOffset + distanceGrounded))
         {
             slopeNormal = hit.normal;
             return (slopeNormal.y > slopeThreshold) ? true : false;
         }
-
+        //Back Left
         if (Physics.Raycast(new Vector3(controller.bounds.center.x - (controller.bounds.extents.x - extremitiesOffset), yRay, controller.bounds.center.z - (controller.bounds.extents.z - extremitiesOffset)), -Vector3.up, out hit, innerVerticalOffset + distanceGrounded))
         {
             slopeNormal = hit.normal;
