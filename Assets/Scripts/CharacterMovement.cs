@@ -11,7 +11,7 @@ using UnityEngine;
 
 public class CharacterMovement : MonoBehaviour
 {
-    [SerializeField] private Animator anim;
+    private Animator anim;
     private CharacterController controller;
     private Vector3 slopeNormal;
     private bool grounded;
@@ -19,7 +19,7 @@ public class CharacterMovement : MonoBehaviour
     private float verticalVelocity;
 
     InputController inputController;
-
+    #region SerializedVariables
     [SerializeField] private float speedX = 5f;
     [SerializeField] private float speedY = 5f;
     [SerializeField] private float gravity = 0.25f;
@@ -30,22 +30,24 @@ public class CharacterMovement : MonoBehaviour
     [SerializeField] private float innerVerticalOffset = 0.25f;
     [SerializeField] private float distanceGrounded = 0.15f;
     [SerializeField] private float slopeThreshold = 0.55f;
-
+    #endregion
     private void Awake()
     {
         controller = GetComponent<CharacterController>();
+        anim = transform.GetChild(0).GetComponent<Animator>();
     }
 
     private void Start()
     {
         inputController = InputController.Instance;
         inputController.Jump += Jump;
+        inputController.Attack += Crouch;//Nombre temporal mientras se agrega el input de Crouch
     }
 
-    private void Update()
+    public void Move()
     {
-        Vector3 inputVector = PoolInput();
-        Vector3 moveVector = new Vector3(inputVector.x * speedX, 0, inputVector.y * speedY); ;
+        Vector3 inputVector = GetInput();
+        Vector3 moveVector = new Vector3(inputVector.x * speedX, 0, inputVector.y * speedY);
 
         if (moveVector.x > 0 && !facingRight)
         {
@@ -79,7 +81,21 @@ public class CharacterMovement : MonoBehaviour
 
         controller.Move(moveVector * Time.deltaTime);
     }
-    private Vector3 PoolInput()
+    public void Crouch()
+    {
+
+    }
+
+    private void Jump()
+    {
+        if (grounded)
+        {
+            verticalVelocity = jumpForce;
+            slopeNormal = Vector3.up;
+            anim?.SetTrigger("Jump");
+        }
+    }
+    private Vector3 GetInput()
     {
         Vector3 r = Vector3.zero;
         r.x = inputController.Move.x;
@@ -135,7 +151,6 @@ public class CharacterMovement : MonoBehaviour
 
         return false;
     }
-
     private void Flip()
     {
         facingRight = !facingRight;
@@ -144,13 +159,4 @@ public class CharacterMovement : MonoBehaviour
         transform.localScale = theScale;
     }
 
-    private void Jump()
-    {
-        if (grounded)
-        {
-            verticalVelocity = jumpForce;
-            slopeNormal = Vector3.up;
-            anim?.SetTrigger("Jump");
-        }
-    }
 }
