@@ -14,6 +14,8 @@ public class AudioManager : MonoBehaviour
     /// the staticSounds Property refers to those sound that will be present most of the time.
     /// </summary>
     public Sound[] staticSounds;
+    
+    public AudioMixerGroup[] mixers;
 
     Sound[] externalSounds;
 
@@ -37,15 +39,20 @@ public class AudioManager : MonoBehaviour
         DontDestroyOnLoad(gameObject);
         #endregion
 
-        #region setSounds
-        for (int i = 0; i < staticSounds.Length; i++)
-        {
-            AudioSource src = gameObject.AddComponent<AudioSource>();
-            staticSounds[i].SetAudioSource(ref src);
-        }
-        #endregion
+        SetSounds(staticSounds);
+        AddToDictionary(staticSounds);
     }
     
+    void SetSounds(Sound[] sounds)
+    {
+        for (int i = 0; i < sounds.Length; i++)
+        {
+            AudioSource src = gameObject.AddComponent<AudioSource>();
+            sounds[i].SetAudioSource(ref src, ref mixers[(int)sounds[i].mixerChannel]);
+        }
+    }
+
+
     void AddToDictionary(Sound[] sounds)
     {
         for (int i = 0; i < sounds.Length; i++)
@@ -58,7 +65,9 @@ public class AudioManager : MonoBehaviour
     {
         for (int i = 0; i < sounds.Length; i++)
         {
+            Destroy(soundDictionary[sounds[i].name].source);
             soundDictionary.Remove(sounds[i].name);
+            
         }
     }
 
@@ -105,8 +114,37 @@ public class AudioManager : MonoBehaviour
     /// <param name="package"></param>
     public void ReceiveExternal(Sound[] sounds)
     {
-        RemoveFromDictionary(externalSounds);
+        if(externalSounds != null)
+        {
+            RemoveFromDictionary(externalSounds);
+        }
         externalSounds = sounds;
+        SetSounds(sounds);
         AddToDictionary(sounds);
+        Debug.Log("Received sounds: " + soundDictionary.Count);
     }
+
+    private void OnValidate()
+    {
+        if (staticSounds.Length > 0)
+        {
+            for (int i = 0; i < staticSounds.Length; i++)
+            {
+                if (staticSounds[i].clip != null)
+                {
+                    staticSounds[i].name = staticSounds[i].clip.name;
+                }
+            }
+        }
+    }
+
+}
+/// <summary>
+/// 
+/// </summary>
+public enum MixerChannel
+{
+    GamePlay,
+    GUI,
+    Music,
 }

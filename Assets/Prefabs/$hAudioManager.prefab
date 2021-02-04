@@ -43,4 +43,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 753446e495733e54dbf153946896a46b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  staticSounds: []
+  staticSounds:
+  - name: TemaMenu
+    clip: {fileID: 8300000, guid: ec1bf4bdb70250345bcd1d88cee4683e, type: 3}
+    mixerChannel: 1
+    volume: 0
+    pitch: 0
+    loop: 0
+    source: {fileID: 0}
+  mixers:
+  - {fileID: 24300002, guid: 670df12542120e24497301b19fe36509, type: 2}
+  - {fileID: 24300002, guid: 84c01446b58b9ea48b0d55c1d6d3116a, type: 2}
+  - {fileID: 24300002, guid: 6f269bd4dd33f544196e23b15b808b0f, type: 2}
