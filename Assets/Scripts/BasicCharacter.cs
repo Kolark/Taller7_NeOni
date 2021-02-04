@@ -10,7 +10,7 @@ public class BasicCharacter : MonoBehaviour
         character = GetComponent<CharacterMovement>();
     }
 
-    private void Update()
+    private void FixedUpdate()
     {
         character.Move();
     }
