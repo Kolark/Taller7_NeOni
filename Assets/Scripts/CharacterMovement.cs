@@ -77,6 +77,7 @@ public class CharacterMovement : MonoBehaviour
 
         //if (slopeNormal != Vector3.up) moveVector = FollowFloor(moveVector);
 
+        
         velocity = rb.velocity;
         velocity += inputVector * acceleration * Time.deltaTime;
         velocity.x = Mathf.Clamp(velocity.x, -maxSpeed, maxSpeed);
@@ -86,9 +87,15 @@ public class CharacterMovement : MonoBehaviour
 
     public void Crouch()
     {
-        Debug.Log("Ma men do be crouching");
-        isCrouching = true;
-        anim.SetBool("IsCrouching", isCrouching);
+        Vector2 inputVector = GetInput();
+        print(inputVector);
+        isCrouching = inputVector.y < 0f;
+        if (isCrouching) {
+            Debug.Log("Ma men do be crouching");
+            anim.SetBool("IsCrouching", isCrouching);
+        } else {            
+            Debug.Log("Not crouching");
+        }
     }
 
     private void Jump()

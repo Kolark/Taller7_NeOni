@@ -241,6 +241,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Inputcontroller
       objectReference: {fileID: 0}
+    - target: {fileID: 8841382547496431969, guid: 4f88b89e342339c45976eb49a315dc05,
+        type: 3}
+      propertyPath: m_DefaultControlScheme
+      value: XboxController
+      objectReference: {fileID: 0}
     - target: {fileID: 8841382547496431970, guid: 4f88b89e342339c45976eb49a315dc05,
         type: 3}
       propertyPath: m_RootOrder

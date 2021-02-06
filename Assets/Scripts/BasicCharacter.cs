@@ -13,5 +13,6 @@ public class BasicCharacter : MonoBehaviour
     private void FixedUpdate()
     {
         character.Move();
+        character.Crouch();
     }
 }
